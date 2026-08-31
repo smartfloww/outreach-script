@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Outreach Playbook — Cathy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink: #23211d;
+    --ink-soft: #55524a;
+    --paper: #e9e3d4;
+    --paper-deep: #ddd5c1;
+    --card: #fbf9f2;
+    --card-line: #d9d0ba;
+    --accent: #3f6659;
+    --accent-deep: #2c4a41;
+    --accent-soft: #dbe6de;
+    --gold: #b9822f;
+    --gold-soft: #f1e2c3;
+    --radius-tab: 10px 10px 0 0;
+    --radius-card: 4px;
+    --shadow-card: 0 1px 0 rgba(35,33,29,0.05);
+    --focus: #2c4a41;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection{ background: var(--accent-soft); }
+
+  a{ color: inherit; }
+
+  button{ font-family: inherit; }
+
+  /* ---------- Layout shell ---------- */
+
+  .page{
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 20px 96px;
+  }
+
+  header.masthead{
+    padding: 44px 0 22px;
+  }
+
+  .eyebrow-row{
+    display:flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  h1{
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 34px;
+    letter-spacing: -0.01em;
+    margin: 0 0 6px;
+    color: var(--ink);
+  }
+
+  .tagline{
+    font-size: 15px;
+    color: var(--ink-soft);
+    margin: 0;
+    max-width: 46ch;
+    line-height: 1.5;
+  }
+
+  .byline{
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    text-align: right;
+    line-height: 1.5;
+  }
+
+  .byline strong{ color: var(--ink); font-weight: 600; }
+
+  /* ---------- Search ---------- */
+
+  .search-wrap{
+    margin-top: 24px;
+    position: relative;
+  }
+
+  .search-wrap input{
+    width: 100%;
+    padding: 12px 14px 12px 40px;
+    border-radius: var(--radius-card);
+    border: 1px solid var(--card-line);
+    background: var(--card);
+    font-size: 14.5px;
+    color: var(--ink);
+    outline: none;
+  }
+
+  .search-wrap input:focus{
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+
+  .search-wrap svg{
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    stroke: var(--ink-soft);
+    pointer-events: none;
+  }
+
+  /* ---------- Folder-tab main nav ---------- */
+
+  .main-tabs{
+    display: flex;
+    gap: 6px;
+    margin-top: 28px;
+    padding-left: 4px;
+  }
+
+  .main-tab{
+    appearance: none;
+    border: 1px solid var(--card-line);
+    border-bottom: none;
+    background: var(--paper-deep);
+    color: var(--ink-soft);
+    padding: 10px 18px;
+    border-radius: var(--radius-tab);
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    top: 1px;
+    transition: background .15s ease, color .15s ease;
+  }
+
+  .main-tab:hover{ color: var(--ink); }
+
+  .main-tab.active{
+    background: var(--card);
+    color: var(--accent-deep);
+    border-color: var(--card-line);
+  }
+
+  .tab-panel-frame{
+    background: var(--card);
+    border: 1px solid var(--card-line);
+    border-radius: 0 4px 4px 4px;
+    padding: 26px 26px 6px;
+  }
+
+  /* ---------- Filter pills ---------- */
+
+  .filter-group{
+    margin-bottom: 18px;
+  }
+
+  .filter-label{
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--ink-soft);
+    margin: 0 0 8px;
+  }
+
+  .pill-row{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .pill{
+    appearance: none;
+    border: 1px solid var(--card-line);
+    background: transparent;
+    color: var(--ink-soft);
+    padding: 7px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all .15s ease;
+  }
+
+  .pill:hover{ border-color: var(--accent); color: var(--accent-deep); }
+
+  .pill.active{
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fbf9f2;
+  }
+
+  hr.rule{
+    border: none;
+    border-top: 1px solid var(--card-line);
+    margin: 20px 0 22px;
+  }
+
+  /* ---------- Sections & cards ---------- */
+
+  .section-block{
+    margin-bottom: 30px;
+  }
+
+  .section-heading{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 12px;
+  }
+
+  .section-heading h2{
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    color: var(--ink);
+  }
+
+  .section-heading .count{
+    font-size: 12px;
+    color: var(--ink-soft);
+    background: var(--paper-deep);
+    padding: 2px 8px;
+    border-radius: 999px;
+  }
+
+  .card{
+    background: #fff;
+    border: 1px solid var(--card-line);
+    border-radius: var(--radius-card);
+    margin-bottom: 12px;
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+  }
+
+  .card-head{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 13px 16px;
+    border-bottom: 1px solid var(--card-line);
+    background: #f8f5ec;
+  }
+
+  .card-title{
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .card-title .sub{
+    font-weight: 400;
+    color: var(--ink-soft);
+  }
+
+  .card-meta{
+    font-size: 11.5px;
+    color: var(--gold);
+    background: var(--gold-soft);
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .card-body{
+    padding: 16px;
+  }
+
+  .msg-text{
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: #322f28;
+  }
+
+  .msg-text p{ margin: 0 0 10px; }
+  .msg-text p:last-child{ margin-bottom: 0; }
+
+  .card-foot{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 16px 14px;
+  }
+
+  .attach-note{
+    font-size: 12px;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  .copy-btn{
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    border: 1px solid var(--accent);
+    background: transparent;
+    color: var(--accent-deep);
+    padding: 7px 13px;
+    border-radius: var(--radius-card);
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: auto;
+    transition: background .15s ease, color .15s ease, transform .08s ease;
+  }
+
+  .copy-btn:hover{ background: var(--accent); color: #fff; }
+  .copy-btn:active{ transform: scale(0.97); }
+
+  .copy-btn svg{ width: 14px; height: 14px; }
+
+  .copy-btn.copied{
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+
+  .copy-btn .icon-check{ display: none; }
+  .copy-btn.copied .icon-copy{ display: none; }
+  .copy-btn.copied .icon-check{ display: inline-flex; }
+
+  .indent-card{ margin-left: 20px; }
+
+  /* ---------- Empty state ---------- */
+
+  .empty-state{
+    padding: 40px 10px 60px;
+    text-align: center;
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+
+  /* ---------- Footer ---------- */
+
+  footer{
+    margin-top: 30px;
+    padding: 18px 4px 0;
+    font-size: 12px;
+    color: var(--ink-soft);
+    text-align: center;
+  }
+
+  /* ---------- Focus visibility ---------- */
+
+  button:focus-visible, input:focus-visible{
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  /* ---------- Responsive ---------- */
+
+  @media (max-width: 600px){
+    .page{ padding: 0 14px 72px; }
+    header.masthead{ padding: 30px 0 16px; }
+    h1{ font-size: 27px; }
+    .byline{ text-align: left; }
+    .eyebrow-row{ flex-direction: column; align-items: flex-start; }
+    .tab-panel-frame{ padding: 20px 16px 4px; }
+    .main-tab{ padding: 9px 13px; font-size: 12.5px; }
+    .card-foot{ flex-wrap: wrap; }
+    .copy-btn{ margin-left: 0; width: 100%; justify-content: center; }
+    .indent-card{ margin-left: 8px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ transition: none !important; scroll-behavior: auto !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow-row">
+      <div>
+        <h1>Outreach Playbook</h1>
+        <p class="tagline">Every message, organized by business type and stage. Tap copy, paste into Messenger.</p>
+      </div>
+      <div class="byline"><strong>Cathy</strong><br>Freelance web design · Manila</div>
+    </div>
+
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input type="text" id="searchInput" placeholder="Search messages…" autocomplete="off">
+    </div>
+
+    <nav class="main-tabs" role="tablist" aria-label="Playbook sections">
+      <button class="main-tab active" data-tab="scripts" role="tab" aria-selected="true">Scripts</button>
+      <button class="main-tab" data-tab="followups" role="tab" aria-selected="false">Follow-Ups</button>
+    </nav>
+  </header>
+
+  <div class="tab-panel-frame">
+
+    <!-- SCRIPTS PANEL -->
+    <section id="panel-scripts">
+      <div class="filter-group">
+        <p class="filter-label">BUSINESS TYPE</p>
+        <div class="pill-row" id="bizPills"></div>
+      </div>
+      <div class="filter-group">
+        <p class="filter-label">SITUATION</p>
+        <div class="pill-row" id="statusPills"></div>
+      </div>
+      <hr class="rule">
+      <div id="scriptsOutput"></div>
+    </section>
+
+    <!-- FOLLOW-UPS PANEL -->
+    <section id="panel-followups" style="display:none;">
+      <div class="filter-group">
+        <p class="filter-label">BUSINESS TYPE</p>
+        <div class="pill-row" id="bizPillsFollowup"></div>
+      </div>
+      <hr class="rule">
+      <div id="followupsOutput"></div>
+    </section>
+
+  </div>
+
+  <footer>Static reference tool — nothing here is sent or stored anywhere.</footer>
+
+</div>
+
+<script>
+(function(){
+
+  /* ============================================================
+     DATA
+     ============================================================ */
+
+  const BUSINESS_TYPES = [
+    { key: 'salon', label: 'Salon' },
+    { key: 'skin',  label: 'Skin Clinic' },
+    { key: 'spa',   label: 'Spa' }
+  ];
+
+  const STATUS_TYPES = [
+    { key: 'no_website',  label: 'No Website' },
+    { key: 'bad_website', label: 'Outdated Website' }
+  ];
+
+  // ---- Scripts, hardcoded per business + situation (exact wording per source files) ----
+
+  const SCRIPTS = {
+
+    salon: {
+      no_website: {
+        openers: [
+          { title: 'Opener 1 — Finalized Version', text: `Hi po! Came across your salon’s page, your work looks really nice. I’m Cathy, freelance web designer here in Manila. I build simple mobile-friendly websites that help salons get more bookings and show up on Google when people search “salon near me.”\n\nWould it be okay if I send you a quick sample video? No cost, no obligation po.` },
+          { title: 'Opener 2 — Messenger / Booking Organization', text: `Hi po! I came across your salon’s page and noticed you’re getting quite a few inquiries here. I’m Cathy, a freelance web designer here in Manila. I build simple mobile-friendly websites that can make it easier for customers to see your services, contact you, and book.\n\nWould it be okay po if I send you a quick sample of what that could look like for your salon? No cost, no obligation po.` },
+          { title: 'Opener 3 — Services / Information Clarity', text: `Hi po! I came across your salon’s page, your services look really nice. I’m Cathy, freelance web designer here in Manila. I build simple mobile-friendly websites where salons can show their services, prices, photos, and booking details clearly, while also giving new customers another way to find them on Google.\n\nWould it be okay po if I send you a quick sample video? No cost, no obligation po.` }
+        ],
+        positive: `Thanks po! I actually made a quick video showing what a website for your salon could look like. It’s just 30 seconds. Can I send it here?`,
+        personalized: `I made a no-obligation preview for [Business]. I focused on letting clients quickly see your [top three services], location, and a direct “Book/Message Us” button. Here is QR/Link. If you like the direction, we can turn this into a complete starter site.`,
+        afterDemo: `Hi po! Here's the sample, hope you like it! We're also offering a free personalized version, just send me a few photos and your business info, or I can grab them from your page if that's easier. If you like it, we can move forward from there. No cost po!`,
+        notInterested: `No worries po! Can I ask — is it more about budget right now, or do you feel like your Facebook page is enough? Just so I know po.`,
+        budget: `Totally get it po! I have a starter package specifically for new salons, a complete 3-page website at a lower rate. That’s much cheaper than running ads for a month. Would that work better?`,
+        facebook: `You’re right po, FB is great! A website just helps you show up on Google too when people search “salon near me.” It’s like having your shop on two streets instead of one. But I respect your decision po!`
+      },
+      bad_website: {
+        openers: [
+          { title: 'Opener 1 — Finalized Version', text: `Hi po! I found your salon while searching online. Noticed [specific problem you see in their website, e.g., “it’s hard to read on mobile” / “no clear booking button”].\n\nI’m Cathy, I do freelance web design. I help salon owners fix stuff like this so customers can actually book from their phones.\n\nWould you be open to a free quick audit? No strings attached po, I’ll just send 2–3 specific things I’d improve.` },
+          { title: 'Opener 2 — Mobile Experience', text: `Hi po! I came across your salon while looking online and checked your website on my phone. I noticed [specific mobile issue you actually observed], which could make it a little harder for customers to browse or book.\n\nI’m Cathy, a freelance web designer here in Manila. Would you be open po to a quick free review? I can send you 2–3 specific things I’d improve, no obligation.` },
+          { title: 'Opener 3 — First Impression / Booking', text: `Hi po! I found your salon online and had a quick look at your website. Your salon looks great, but I noticed [specific issue you actually observed], which may make it harder for new customers to quickly see your services or book.\n\nI’m Cathy, freelance web designer here in Manila. Would you be open po if I send you a quick free review with 2–3 things I’d improve? No strings attached po.` }
+        ],
+        positive: `Great po! I’ll take a quick look and send you 2–3 things I’d improve completely free, no obligation. Just want to show you what’s possible.`,
+        personalized: `I made a no-obligation preview for [Business]. I focused on letting clients quickly see your [top three services], location, and a direct “Book/Message Us” button. Here is QR/Link. If you like the direction, we can turn this into a complete starter site.`,
+        afterAudit: `If you’d like, I can build you a faster, mobile-friendly version, same content, better experience for your customers. Want me to send a quick sample?`,
+        siteIsFine: `No worries po! If you ever want a second opinion or a refresh down the line, feel free to reach out. Wishing your salon continued success po!`
+      }
+    },
+
+    skin: {
+      no_website: {
+        openers: [
+          { title: 'Opener 1 — Finalized Version', text: `Hi po! Came across your clinic's page, your work looks really nice. I'm Cathy, freelance web designer here in Manila. I build simple mobile-friendly websites that help skin clinics get more bookings and show up on Google when people search "skin clinic near me."\n\nWould it be okay if I send you a quick sample video? No cost, no obligation po.` },
+          { title: 'Opener 2 — Messenger / Booking Organization', text: `Hi po! I came across your clinic's page and noticed you're getting quite a few inquiries here. I'm Cathy, a freelance web designer here in Manila. I build simple mobile-friendly websites that can make it easier for patients to see your services, contact you, and book.\n\nWould it be okay po if I send you a quick sample of what that could look like for your clinic? No cost, no obligation po.` },
+          { title: 'Opener 3 — Services / Information Clarity', text: `Hi po! I came across your clinic's page, your services look really nice. I'm Cathy, freelance web designer here in Manila. I build simple mobile-friendly websites where skin clinics can show their services, prices, photos, and booking details clearly, while also giving new patients another way to find them on Google.\n\nWould it be okay po if I send you a quick sample video? No cost, no obligation po.` }
+        ],
+        positive: `Thanks po! I actually made a quick video showing what a website for your clinic could look like. It's just 30 seconds. Can I send it here?`,
+        personalized: `I made a no-obligation preview for [Business]. I focused on letting clients quickly see your [top three services], location, and a direct “Book/Message Us” button. Here is QR/Link. If you like the direction, we can turn this into a complete starter site.`,
+        afterDemo: `Hi po! Here's the sample, hope you like it! We're also offering a free personalized version,  just send me a few photos and your business info, or I can grab them from your page if that's easier. If you like it, we can move forward from there. No cost po!`,
+        notInterested: `No worries po! Can I ask, is it more about budget right now, or do you feel like your Facebook page is enough? Just so I know po.`,
+        budget: `Totally get it po! I have a starter package specifically for new clinics, a complete 3-page website at a lower rate. That's much cheaper than running ads for a month. Would that work better?`,
+        facebook: `You're right po, FB is great! A website just helps you show up on Google too when people search "skin clinic near me." It's like having your shop on two streets instead of one. But I respect your decision po!`
+      },
+      bad_website: {
+        openers: [
+          { title: 'Opener 1 — Finalized Version', text: `Hi po! I found your clinic while searching online. Noticed [specific problem you see in their website, e.g., "it's hard to read on mobile" / "no clear booking button"].\n\nI'm Cathy, I do freelance web design. I help skin clinic owners fix stuff like this so patients can actually book from their phones.\n\nWould you be open to a free quick audit? No strings attached po, I'll just send 2–3 specific things I'd improve.` },
+          { title: 'Opener 2 — Mobile Experience', text: `Hi po! I came across your clinic while looking online and checked your website on my phone. I noticed [specific mobile issue you actually observed], which could make it a little harder for patients to browse or book.\n\nI'm Cathy, a freelance web designer here in Manila. Would you be open po to a quick free review? I can send you 2–3 specific things I'd improve, no obligation.` },
+          { title: 'Opener 3 — First Impression / Booking', text: `Hi po! I found your clinic online and had a quick look at your website. Your clinic looks great, but I noticed [specific issue you actually observed], which may make it harder for new patients to quickly see your services or book.\n\nI'm Cathy, freelance web designer here in Manila. Would you be open po if I send you a quick free review with 2–3 things I'd improve? No strings attached po.` }
+        ],
+        positive: `Great po! I'll take a quick look and send you 2–3 things I'd improve completely free, no obligation. Just want to show you what's possible.`,
+        personalized: `I made a no-obligation preview for [Business]. I focused on letting clients quickly see your [top three services], location, and a direct “Book/Message Us” button. Here is QR/Link. If you like the direction, we can turn this into a complete starter site.`,
+        afterAudit: `If you'd like, I can build you a faster, mobile-friendly version, same content, better experience for your patients. Want me to send a quick sample?`,
+        siteIsFine: `No worries po! If you ever want a second opinion or a refresh down the line, feel free to reach out. Wishing your clinic continued success po!`
+      }
+    },
+
+    spa: {
+      no_website: {
+        openers: [
+          { title: 'Opener 1 — Finalized Version', text: `Hi po! Came across your spa's page, your work looks really nice. I'm Cathy, freelance web designer here in Manila. I build simple mobile-friendly websites that help spas get more bookings and show up on Google when people search "spa near me."\n\nWould it be okay if I send you a quick sample video? No cost, no obligation po.` },
+          { title: 'Opener 2 — Messenger / Booking Organization', text: `Hi po! I came across your spa's page and noticed you're getting quite a few inquiries here. I'm Cathy, a freelance web designer here in Manila. I build simple mobile-friendly websites that can make it easier for customers to see your services, contact you, and book.\n\nWould it be okay po if I send you a quick sample of what that could look like for your spa? No cost, no obligation po.` },
+          { title: 'Opener 3 — Services / Information Clarity', text: `Hi po! I came across your spa's page, your services look really nice. I'm Cathy, freelance web designer here in Manila. I build simple mobile-friendly websites where spas can show their services, prices, photos, and booking details clearly, while also giving new customers another way to find them on Google.\n\nWould it be okay po if I send you a quick sample video? No cost, no obligation po.` }
+        ],
+        positive: `Thanks po! I actually made a quick video showing what a website for your spa could look like. It's just 30 seconds. Can I send it here?`,
+        personalized: `I made a no-obligation preview for [Business]. I focused on letting clients quickly see your [top three services], location, and a direct “Book/Message Us” button. Here is QR/Link. If you like the direction, we can turn this into a complete starter site.`,
+        afterDemo: `Hi po! Here's the sample, hope you like it! We're also offering a free personalized version,  just send me a few photos and your business info, or I can grab them from your page if that's easier. If you like it, we can move forward from there. No cost po!`,
+        notInterested: `No worries po! Can I ask — is it more about budget right now, or do you feel like your Facebook page is enough? Just so I know po.`,
+        budget: `Totally get it po! I have a starter package specifically for new spas, a complete 3-page website at a lower rate. That's much cheaper than running ads for a month. Would that work better?`,
+        facebook: `You're right po, FB is great! A website just helps you show up on Google too when people search "spa near me." It's like having your shop on two streets instead of one. But I respect your decision po!`
+      },
+      bad_website: {
+        openers: [
+          { title: 'Opener 1 — Finalized Version', text: `Hi po! I found your spa while searching online. Noticed [specific problem you see in their website, e.g., "it's hard to read on mobile" / "no clear booking button"].\n\nI'm Cathy, I do freelance web design. I help spa owners fix stuff like this so customers can actually book from their phones.\n\nWould you be open to a free quick audit? No strings attached po, I'll just send 2–3 specific things I'd improve.` },
+          { title: 'Opener 2 — Mobile Experience', text: `Hi po! I came across your spa while looking online and checked your website on my phone. I noticed [specific mobile issue you actually observed], which could make it a little harder for customers to browse or book.\n\nI'm Cathy, a freelance web designer here in Manila. Would you be open po to a quick free review? I can send you 2–3 specific things I'd improve, no obligation.` },
+          { title: 'Opener 3 — First Impression / Booking', text: `Hi po! I found your spa online and had a quick look at your website. Your spa looks great, but I noticed [specific issue you actually observed], which may make it harder for new customers to quickly see your services or book.\n\nI'm Cathy, freelance web designer here in Manila. Would you be open po if I send you a quick free review with 2–3 things I'd improve? No strings attached po.` }
+        ],
+        positive: `Great po! I'll take a quick look and send you 2–3 things I'd improve completely free, no obligation. Just want to show you what's possible.`,
+        personalized: `I made a no-obligation preview for [Business]. I focused on letting clients quickly see your [top three services], location, and a direct “Book/Message Us” button. Here is QR/Link. If you like the direction, we can turn this into a complete starter site.`,
+        afterAudit: `If you'd like, I can build you a faster, mobile-friendly version, same content, better experience for your customers. Want me to send a quick sample?`,
+        siteIsFine: `No worries po! If you ever want a second opinion or a refresh down the line, feel free to reach out. Wishing your spa continued success po!`
+      }
+    }
+
+  };
+
+  // ---- Follow-ups: base copy written for salon, adapted per business type ----
+
+  const FOLLOWUP_BASE = {
+    cold: [
+      { meta: 'Day 3–4', title: 'Cold Follow-Up #1', text: `Hi po! Just bumping this up po. Salon pages get so many messages, so this might’ve gotten buried. I help salon owners get a simple, affordable website so customers can find you on Google too, not just FB. Would you be open to a quick sample? No pressure po, take your time` },
+      { meta: 'Day 7', title: 'Cold Follow-Up #2', note: 'Attach the relevant 30-second sample video.', text: `Hi po! Made this quick video so you can actually see it instead of me just describing it, this is what a website for your salon could look like on the phone.\n\nI’m still building up my client list, so my rate right now is low, around ₱3,000 - ₱5,000 for a complete 5-7 page site. I’ll keep revising it until you’re happy with how it looks. No rush at all po, just wanted you to see it.` },
+      { meta: 'Day 14', title: 'Cold Follow-Up #3 — Last Message', text: `Hi po! Last message from me, promise 🙂\nNo hard feelings if it's not for you, just wanted to leave something before I go: a free 3-page sample site using photos from your page, completely free, no strings.\nJust reply "yes" po and I'll start on your sample right away. Wishing your salon continued success either way 🙏` }
+    ],
+    postSample: [
+      { meta: 'Day 2–3', title: 'After Sample Sent, No Reply — #1', text: `Hi po! No worries if you've been busy 😊 Still happy to build your free sample, if you're interested, just reply "yes" and I'll grab the photos straight from your page, no extra work needed on your end!` },
+      { meta: 'Day 5–7', title: 'After Sample Sent, No Reply — #2', text: `Hi po! Totally fine if timing isn't right, just checking, are you still interested in the free sample? A quick "yes" is all I need, I'll handle the rest using your page photos.` }
+    ],
+    postPersonalized: [
+      { meta: 'Day 2–3', title: 'After Personalized Sample — #1', text: `Hi po! Hope you liked the sample, would love to hear your thoughts, even just what you liked or didn't po 😊` },
+      { meta: 'Day 5–7', title: 'After Personalized Sample — #2', text: `Hi po! No pressure at all, if it's about the price or you're still checking with someone, happy to work with you on that, we keep things simple and affordable. Just let me know what's on your mind whenever po!` },
+      { meta: 'Final', title: 'After Personalized Sample — #3, Last Message', text: `Hi po! Last message from me, promise 🙂\n\nReally enjoyed putting the sample together for your salon, if it's not the right fit right now, totally okay, should I just close this out? And if there's something still holding you back (price, timing, anything), happy to hear it po. Either way, wishing you continued success! 🙏` }
+    ]
+  };
+
+  const BIZ_WORDS = {
+    salon: { salon: 'salon', Salon: 'Salon', customers: 'customers' },
+    skin:  { salon: 'clinic', Salon: 'Clinic', customers: 'patients' },
+    spa:   { salon: 'spa', Salon: 'Spa', customers: 'customers' }
+  };
+
+  function adaptText(text, bizKey){
+    const map = BIZ_WORDS[bizKey];
+    if(!map) return text;
+    let out = text;
+    out = out.replace(/\bSalon\b/g, map.Salon);
+    out = out.replace(/\bsalon\b/g, map.salon);
+    out = out.replace(/\bcustomers\b/g, map.customers);
+    return out;
+  }
+
+  /* ============================================================
+     STATE
+     ============================================================ */
+
+  let state = {
+    tab: 'scripts',
+    biz: 'salon',
+    status: 'no_website',
+    bizFollowup: 'salon',
+    query: ''
+  };
+
+  /* ============================================================
+     RENDER HELPERS
+     ============================================================ */
+
+  function escapeHtml(str){
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  function textToParagraphs(text){
+    return text.split(/\n\n+/).map(block => {
+      const safe = escapeHtml(block).replace(/\n/g, '<br>');
+      return `<p>${safe}</p>`;
+    }).join('');
+  }
+
+  const ICON_COPY = `<svg class="icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
+  const ICON_CHECK = `<svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+
+  let cardCounter = 0;
+
+  function buildCard({ title, sub, meta, text, note }){
+    cardCounter += 1;
+    const id = 'msg-' + cardCounter;
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.dataset.searchText = (title + ' ' + text).toLowerCase();
+
+    card.innerHTML = `
+      <div class="card-head">
+        <div class="card-title">${escapeHtml(title)}${sub ? ` <span class="sub">— ${escapeHtml(sub)}</span>` : ''}</div>
+        ${meta ? `<div class="card-meta">${escapeHtml(meta)}</div>` : ''}
+      </div>
+      <div class="card-body">
+        <div class="msg-text" id="${id}">${textToParagraphs(text)}</div>
+      </div>
+      <div class="card-foot">
+        ${note ? `<span class="attach-note">${escapeHtml(note)}</span>` : ''}
+        <button class="copy-btn" type="button" data-copy-target="${id}" data-raw="${encodeURIComponent(text)}">
+          ${ICON_COPY}${ICON_CHECK}
+          <span class="btn-label">Copy</span>
+        </button>
+      </div>
+    `;
+    return card;
+  }
+
+  function buildSection(heading, cards){
+    const wrap = document.createElement('div');
+    wrap.className = 'section-block';
+    const visibleCards = cards.filter(Boolean);
+    wrap.innerHTML = `<div class="section-heading"><h2>${escapeHtml(heading)}</h2><span class="count">${visibleCards.length}</span></div>`;
+    visibleCards.forEach(c => wrap.appendChild(c));
+    return wrap;
+  }
+
+  /* ============================================================
+     SCRIPTS TAB RENDER
+     ============================================================ */
+
+  function renderPills(container, items, activeKey, onSelect){
+    container.innerHTML = '';
+    items.forEach(item => {
+      const btn = document.createElement('button');
+      btn.className = 'pill' + (item.key === activeKey ? ' active' : '');
+      btn.textContent = item.label;
+      btn.addEventListener('click', () => onSelect(item.key));
+      container.appendChild(btn);
+    });
+  }
+
+  function renderScripts(){
+    renderPills(document.getElementById('bizPills'), BUSINESS_TYPES, state.biz, key => { state.biz = key; renderScripts(); });
+    renderPills(document.getElementById('statusPills'), STATUS_TYPES, state.status, key => { state.status = key; renderScripts(); });
+
+    const data = SCRIPTS[state.biz][state.status];
+    const output = document.getElementById('scriptsOutput');
+    output.innerHTML = '';
+
+    const openerCards = data.openers.map(o => buildCard({ title: o.title, text: o.text }));
+    output.appendChild(buildSection('Opening Message', openerCards));
+
+    const replyCards = [
+      buildCard({ title: 'If They Reply Positively', text: data.positive }),
+      buildCard({ title: 'Personalized Preview Message', sub: 'fill in [Business] and services', text: data.personalized }),
+      state.status === 'no_website'
+        ? buildCard({ title: 'After Sending the Demo / Sample', text: data.afterDemo })
+        : buildCard({ title: 'After Sending the Audit', text: data.afterAudit })
+    ];
+    output.appendChild(buildSection('Replies & Next Steps', replyCards));
+
+    let objectionCards = [];
+    if(state.status === 'no_website'){
+      objectionCards = [
+        buildCard({ title: 'If They Say Not Interested', text: data.notInterested }),
+        (() => { const c = buildCard({ title: '↳ If It\'s About Budget', text: data.budget }); c.classList.add('indent-card'); return c; })(),
+        (() => { const c = buildCard({ title: '↳ If Facebook Is Enough', text: data.facebook }); c.classList.add('indent-card'); return c; })()
+      ];
+    } else {
+      objectionCards = [
+        buildCard({ title: 'If They Say Their Current Site Is Fine', text: data.siteIsFine })
+      ];
+    }
+    output.appendChild(buildSection('Handling Objections', objectionCards));
+
+    applySearchFilter();
+    attachCopyHandlers();
+  }
+
+  /* ============================================================
+     FOLLOW-UPS TAB RENDER
+     ============================================================ */
+
+  function renderFollowups(){
+    renderPills(document.getElementById('bizPillsFollowup'), BUSINESS_TYPES, state.bizFollowup, key => { state.bizFollowup = key; renderFollowups(); });
+
+    const output = document.getElementById('followupsOutput');
+    output.innerHTML = '';
+    const bizKey = state.bizFollowup;
+
+    const coldCards = FOLLOWUP_BASE.cold.map(f => buildCard({
+      title: f.title, meta: f.meta, note: f.note, text: adaptText(f.text, bizKey)
+    }));
+    output.appendChild(buildSection('Cold Outreach — No Reply Yet', coldCards));
+
+    const postSampleCards = FOLLOWUP_BASE.postSample.map(f => buildCard({
+      title: f.title, meta: f.meta, text: adaptText(f.text, bizKey)
+    }));
+    output.appendChild(buildSection('Sample Offered, Waiting on "Yes"', postSampleCards));
+
+    const postPersonalizedCards = FOLLOWUP_BASE.postPersonalized.map(f => buildCard({
+      title: f.title, meta: f.meta, text: adaptText(f.text, bizKey)
+    }));
+    output.appendChild(buildSection('Personalized Sample Sent, No Reply', postPersonalizedCards));
+
+    applySearchFilter();
+    attachCopyHandlers();
+  }
+
+  /* ============================================================
+     COPY BEHAVIOR
+     ============================================================ */
+
+  function attachCopyHandlers(){
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const raw = decodeURIComponent(btn.dataset.raw);
+        try{
+          await navigator.clipboard.writeText(raw);
+        }catch(e){
+          const ta = document.createElement('textarea');
+          ta.value = raw;
+          ta.style.position = 'fixed';
+          ta.style.left = '-9999px';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+        }
+        const label = btn.querySelector('.btn-label');
+        const prevLabel = label.textContent;
+        btn.classList.add('copied');
+        label.textContent = 'Copied';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          label.textContent = prevLabel;
+        }, 1600);
+      });
+    });
+  }
+
+  /* ============================================================
+     SEARCH
+     ============================================================ */
+
+  function applySearchFilter(){
+    const q = state.query.trim().toLowerCase();
+    const activePanel = state.tab === 'scripts' ? document.getElementById('scriptsOutput') : document.getElementById('followupsOutput');
+    const sections = activePanel.querySelectorAll('.section-block');
+
+    sections.forEach(section => {
+      let visibleCount = 0;
+      section.querySelectorAll('.card').forEach(card => {
+        const match = !q || card.dataset.searchText.includes(q);
+        card.style.display = match ? '' : 'none';
+        if(match) visibleCount += 1;
+      });
+      section.querySelector('.count').textContent = visibleCount;
+      section.style.display = visibleCount === 0 ? 'none' : '';
+    });
+
+    const anyVisible = Array.from(sections).some(s => s.style.display !== 'none');
+    let empty = activePanel.querySelector('.empty-state');
+    if(!anyVisible && q){
+      if(!empty){
+        empty = document.createElement('div');
+        empty.className = 'empty-state';
+        empty.textContent = 'No messages match your search.';
+        activePanel.appendChild(empty);
+      }
+    } else if(empty){
+      empty.remove();
+    }
+  }
+
+  /* ============================================================
+     TAB SWITCHING
+     ============================================================ */
+
+  function switchTab(tab){
+    state.tab = tab;
+    document.querySelectorAll('.main-tab').forEach(t => {
+      const isActive = t.dataset.tab === tab;
+      t.classList.toggle('active', isActive);
+      t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
+    document.getElementById('panel-scripts').style.display = tab === 'scripts' ? '' : 'none';
+    document.getElementById('panel-followups').style.display = tab === 'followups' ? '' : 'none';
+    applySearchFilter();
+  }
+
+  document.querySelectorAll('.main-tab').forEach(btn => {
+    btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+  });
+
+  document.getElementById('searchInput').addEventListener('input', (e) => {
+    state.query = e.target.value;
+    applySearchFilter();
+  });
+
+  /* ============================================================
+     INIT
+     ============================================================ */
+
+  renderScripts();
+  renderFollowups();
+
+})();
+</script>
+
+</body>
+</html>
