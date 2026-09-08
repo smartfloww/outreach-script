@@ -307,20 +307,29 @@
     font-style: italic;
   }
 
-  .copy-btn{
+  .card-actions{
+    display: flex;
+    gap: 8px;
+    margin-left: auto;
+  }
+
+  .copy-btn,
+  .edit-btn{
     display: inline-flex;
     align-items: center;
     gap: 7px;
-    border: 1px solid var(--accent);
-    background: transparent;
-    color: var(--accent-deep);
     padding: 7px 13px;
     border-radius: var(--radius-card);
     font-size: 12.5px;
     font-weight: 600;
     cursor: pointer;
-    margin-left: auto;
-    transition: background .15s ease, color .15s ease, transform .08s ease;
+    transition: background .15s ease, color .15s ease, border-color .15s ease, transform .08s ease;
+  }
+
+  .copy-btn{
+    border: 1px solid var(--accent);
+    background: transparent;
+    color: var(--accent-deep);
   }
 
   .copy-btn:hover{ background: var(--accent); color: #fff; }
@@ -337,6 +346,34 @@
   .copy-btn .icon-check{ display: none; }
   .copy-btn.copied .icon-copy{ display: none; }
   .copy-btn.copied .icon-check{ display: inline-flex; }
+
+  .edit-btn{
+    border: 1px solid var(--card-line);
+    background: transparent;
+    color: var(--ink-soft);
+  }
+
+  .edit-btn:hover{ border-color: var(--accent); color: var(--accent-deep); }
+  .edit-btn:active{ transform: scale(0.97); }
+
+  .edit-textarea{
+    width: 100%;
+    min-height: 130px;
+    padding: 10px;
+    border: 1px solid var(--card-line);
+    border-radius: var(--radius-card);
+    font-family: inherit;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: #322f28;
+    resize: vertical;
+    outline: none;
+  }
+
+  .edit-textarea:focus{
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
 
   .indent-card{ margin-left: 20px; }
 
@@ -359,6 +396,44 @@
     text-align: center;
   }
 
+  /* ---------- Confirm modal ---------- */
+
+  .modal-overlay{
+    position: fixed;
+    inset: 0;
+    background: rgba(35,33,29,0.45);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 1000;
+  }
+
+  .modal-overlay.open{ display: flex; }
+
+  .modal-box{
+    background: var(--card);
+    border: 1px solid var(--card-line);
+    border-radius: 6px;
+    padding: 22px;
+    max-width: 340px;
+    width: 100%;
+    box-shadow: 0 8px 24px rgba(35,33,29,0.2);
+  }
+
+  .modal-text{
+    font-size: 14.5px;
+    color: var(--ink);
+    margin: 0 0 18px;
+    line-height: 1.5;
+  }
+
+  .modal-actions{
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
   /* ---------- Focus visibility ---------- */
 
   button:focus-visible, input:focus-visible{
@@ -377,7 +452,9 @@
     .tab-panel-frame{ padding: 20px 16px 4px; }
     .main-tab{ padding: 9px 13px; font-size: 12.5px; }
     .card-foot{ flex-wrap: wrap; }
-    .copy-btn{ margin-left: 0; width: 100%; justify-content: center; }
+    .card-actions{ margin-left: 0; width: 100%; }
+    .card-actions .copy-btn,
+    .card-actions .edit-btn{ flex: 1; justify-content: center; }
     .indent-card{ margin-left: 8px; }
   }
 
@@ -440,6 +517,16 @@
 
   <footer>Static reference tool — nothing here is sent or stored anywhere.</footer>
 
+</div>
+
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal-box">
+    <p class="modal-text">Save changes to this message?</p>
+    <div class="modal-actions">
+      <button type="button" class="edit-btn" id="modalCancelBtn">Cancel</button>
+      <button type="button" class="copy-btn" id="modalConfirmBtn">Yes, save</button>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -622,6 +709,7 @@
     const id = 'msg-' + cardCounter;
     const card = document.createElement('div');
     card.className = 'card';
+    card.dataset.title = title;
     card.dataset.searchText = (title + ' ' + text).toLowerCase();
 
     card.innerHTML = `
@@ -634,10 +722,13 @@
       </div>
       <div class="card-foot">
         ${note ? `<span class="attach-note">${escapeHtml(note)}</span>` : ''}
-        <button class="copy-btn" type="button" data-copy-target="${id}" data-raw="${encodeURIComponent(text)}">
-          ${ICON_COPY}${ICON_CHECK}
-          <span class="btn-label">Copy</span>
-        </button>
+        <div class="card-actions">
+          <button class="edit-btn" type="button" data-edit-target="${id}">Edit</button>
+          <button class="copy-btn" type="button" data-copy-target="${id}" data-raw="${encodeURIComponent(text)}">
+            ${ICON_COPY}${ICON_CHECK}
+            <span class="btn-label">Copy</span>
+          </button>
+        </div>
       </div>
     `;
     return card;
@@ -702,7 +793,7 @@
     output.appendChild(buildSection('Handling Objections', objectionCards));
 
     applySearchFilter();
-    attachCopyHandlers();
+    attachCardHandlers(output);
   }
 
   /* ============================================================
@@ -732,39 +823,140 @@
     output.appendChild(buildSection('Personalized Sample Sent, No Reply', postPersonalizedCards));
 
     applySearchFilter();
-    attachCopyHandlers();
+    attachCardHandlers(output);
   }
 
   /* ============================================================
      COPY BEHAVIOR
      ============================================================ */
 
-  function attachCopyHandlers(){
-    document.querySelectorAll('.copy-btn').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        const raw = decodeURIComponent(btn.dataset.raw);
-        try{
-          await navigator.clipboard.writeText(raw);
-        }catch(e){
-          const ta = document.createElement('textarea');
-          ta.value = raw;
-          ta.style.position = 'fixed';
-          ta.style.left = '-9999px';
-          document.body.appendChild(ta);
-          ta.select();
-          document.execCommand('copy');
-          document.body.removeChild(ta);
-        }
-        const label = btn.querySelector('.btn-label');
-        const prevLabel = label.textContent;
-        btn.classList.add('copied');
-        label.textContent = 'Copied';
-        setTimeout(() => {
-          btn.classList.remove('copied');
-          label.textContent = prevLabel;
-        }, 1600);
+  async function copyText(raw){
+    try{
+      await navigator.clipboard.writeText(raw);
+    }catch(e){
+      const ta = document.createElement('textarea');
+      ta.value = raw;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+    }
+  }
+
+  function bindCopyButton(copyBtn){
+    copyBtn.addEventListener('click', async () => {
+      const raw = decodeURIComponent(copyBtn.dataset.raw);
+      await copyText(raw);
+      const label = copyBtn.querySelector('.btn-label');
+      const prevLabel = label.textContent;
+      copyBtn.classList.add('copied');
+      label.textContent = 'Copied';
+      setTimeout(() => {
+        copyBtn.classList.remove('copied');
+        label.textContent = prevLabel;
+      }, 1600);
+    });
+  }
+
+  /* ============================================================
+     EDIT BEHAVIOR
+     ============================================================ */
+
+  function bindCardActions(card){
+    const copyBtn = card.querySelector('.copy-btn');
+    if(copyBtn) bindCopyButton(copyBtn);
+
+    const editBtn = card.querySelector('.edit-btn');
+    if(editBtn) editBtn.addEventListener('click', () => enterEditMode(card));
+  }
+
+  function attachCardHandlers(container){
+    container.querySelectorAll('.card').forEach(bindCardActions);
+  }
+
+  function renderActions(id, text){
+    return `
+      <button class="edit-btn" type="button" data-edit-target="${id}">Edit</button>
+      <button class="copy-btn" type="button" data-copy-target="${id}" data-raw="${encodeURIComponent(text)}">
+        ${ICON_COPY}${ICON_CHECK}
+        <span class="btn-label">Copy</span>
+      </button>
+    `;
+  }
+
+  function enterEditMode(card){
+    const msgText = card.querySelector('.msg-text');
+    const actions = card.querySelector('.card-actions');
+    const copyBtn = card.querySelector('.copy-btn');
+    const originalText = decodeURIComponent(copyBtn.dataset.raw);
+
+    msgText.innerHTML = '';
+    const textarea = document.createElement('textarea');
+    textarea.className = 'edit-textarea';
+    textarea.value = originalText;
+    msgText.appendChild(textarea);
+    textarea.focus();
+
+    actions.innerHTML = `
+      <button class="edit-btn edit-cancel-btn" type="button">Cancel</button>
+      <button class="copy-btn edit-save-btn" type="button">Save</button>
+    `;
+
+    actions.querySelector('.edit-cancel-btn').addEventListener('click', () => {
+      exitEditMode(card, originalText);
+    });
+
+    actions.querySelector('.edit-save-btn').addEventListener('click', () => {
+      const newText = textarea.value.trim();
+      if(!newText){
+        alert('Message can\'t be empty.');
+        return;
+      }
+      showConfirm('Save changes to this message?', () => {
+        exitEditMode(card, newText);
       });
     });
+  }
+
+  function exitEditMode(card, text){
+    const msgText = card.querySelector('.msg-text');
+    const actions = card.querySelector('.card-actions');
+    const id = msgText.id;
+
+    msgText.innerHTML = textToParagraphs(text);
+    actions.innerHTML = renderActions(id, text);
+    bindCardActions(card);
+
+    card.dataset.searchText = (card.dataset.title + ' ' + text).toLowerCase();
+    applySearchFilter();
+  }
+
+  /* ============================================================
+     CONFIRM MODAL
+     ============================================================ */
+
+  function showConfirm(message, onConfirm){
+    const overlay = document.getElementById('confirmModal');
+    overlay.querySelector('.modal-text').textContent = message;
+    overlay.classList.add('open');
+
+    const confirmBtn = document.getElementById('modalConfirmBtn');
+    const cancelBtn = document.getElementById('modalCancelBtn');
+
+    function close(){
+      overlay.classList.remove('open');
+      confirmBtn.removeEventListener('click', handleConfirm);
+      cancelBtn.removeEventListener('click', close);
+    }
+    function handleConfirm(){
+      close();
+      onConfirm();
+    }
+
+    confirmBtn.addEventListener('click', handleConfirm);
+    cancelBtn.addEventListener('click', close);
   }
 
   /* ============================================================
