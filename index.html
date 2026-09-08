@@ -560,7 +560,7 @@
         ],
         positive: `Thanks po! I actually made a quick video showing what a website for your salon could look like. It’s just 30 seconds. Can I send it here?`,
         personalized: `I made a no-obligation preview for [Business]. I focused on letting clients quickly see your [top three services], location, and a direct “Book/Message Us” button. Here is QR/Link. If you like the direction, we can turn this into a complete starter site.`,
-        afterDemo: `Hi po! Here's the sample, hope you like it! We're also offering a free personalized version, just send me a few photos and your business info, or I can grab them from your page if that's easier. If you like it, we can move forward from there. No cost po!`,
+        afterDemo: `Hi po! Here's the sample, hope you like it! I can make a free 3-page personalized preview for [Salon Name] using what's already on your FB page, so you can see how it would look for your salon. No obligation po — you can see it first, then decide if you'd like to continue. Would that be okay po?`,
         notInterested: `No worries po! Can I ask — is it more about budget right now, or do you feel like your Facebook page is enough? Just so I know po.`,
         budget: `Totally get it po! I have a starter package specifically for new salons, a complete 3-page website at a lower rate. That’s much cheaper than running ads for a month. Would that work better?`,
         facebook: `You’re right po, FB is great! A website just helps you show up on Google too when people search “salon near me.” It’s like having your shop on two streets instead of one. But I respect your decision po!`
@@ -587,7 +587,7 @@
         ],
         positive: `Thanks po! I actually made a quick video showing what a website for your clinic could look like. It's just 30 seconds. Can I send it here?`,
         personalized: `I made a no-obligation preview for [Business]. I focused on letting clients quickly see your [top three services], location, and a direct “Book/Message Us” button. Here is QR/Link. If you like the direction, we can turn this into a complete starter site.`,
-        afterDemo: `Hi po! Here's the sample, hope you like it! We're also offering a free personalized version,  just send me a few photos and your business info, or I can grab them from your page if that's easier. If you like it, we can move forward from there. No cost po!`,
+        afterDemo: `Hi po! Here's the sample, hope you like it! I can make a free 3-page personalized preview for [Clinic Name] using what's already on your FB page, so you can see how it would look for your clinic. No obligation po — you can see it first, then decide if you'd like to continue. Would that be okay po?`,
         notInterested: `No worries po! Can I ask, is it more about budget right now, or do you feel like your Facebook page is enough? Just so I know po.`,
         budget: `Totally get it po! I have a starter package specifically for new clinics, a complete 3-page website at a lower rate. That's much cheaper than running ads for a month. Would that work better?`,
         facebook: `You're right po, FB is great! A website just helps you show up on Google too when people search "skin clinic near me." It's like having your shop on two streets instead of one. But I respect your decision po!`
@@ -614,7 +614,7 @@
         ],
         positive: `Thanks po! I actually made a quick video showing what a website for your spa could look like. It's just 30 seconds. Can I send it here?`,
         personalized: `I made a no-obligation preview for [Business]. I focused on letting clients quickly see your [top three services], location, and a direct “Book/Message Us” button. Here is QR/Link. If you like the direction, we can turn this into a complete starter site.`,
-        afterDemo: `Hi po! Here's the sample, hope you like it! We're also offering a free personalized version,  just send me a few photos and your business info, or I can grab them from your page if that's easier. If you like it, we can move forward from there. No cost po!`,
+        afterDemo: `Hi po! Here's the sample, hope you like it! I can make a free 3-page personalized preview for [Spa Name] using what's already on your FB page, so you can see how it would look for your spa. No obligation po — you can see it first, then decide if you'd like to continue. Would that be okay po?`,
         notInterested: `No worries po! Can I ask — is it more about budget right now, or do you feel like your Facebook page is enough? Just so I know po.`,
         budget: `Totally get it po! I have a starter package specifically for new spas, a complete 3-page website at a lower rate. That's much cheaper than running ads for a month. Would that work better?`,
         facebook: `You're right po, FB is great! A website just helps you show up on Google too when people search "spa near me." It's like having your shop on two streets instead of one. But I respect your decision po!`
@@ -637,11 +637,23 @@
   // ---- Follow-ups: base copy written for salon, adapted per business type ----
 
   const FOLLOWUP_BASE = {
-    cold: [
-      { meta: 'Day 3–4', title: 'Cold Follow-Up #1', text: `Hi po! Just bumping this up po. Salon pages get so many messages, so this might’ve gotten buried. I help salon owners get a simple, affordable website so customers can find you on Google too, not just FB. Would you be open to a quick sample? No pressure po, take your time` },
-      { meta: 'Day 7', title: 'Cold Follow-Up #2', note: 'Attach the relevant 30-second sample video.', text: `Hi po! Made this quick video so you can actually see it instead of me just describing it, this is what a website for your salon could look like on the phone.\n\nI’m still building up my client list, so my rate right now is low, around ₱3,000 - ₱5,000 for a complete 5-7 page site. I’ll keep revising it until you’re happy with how it looks. No rush at all po, just wanted you to see it.` },
-      { meta: 'Day 14', title: 'Cold Follow-Up #3 — Last Message', text: `Hi po! Last message from me, promise 🙂\nNo hard feelings if it's not for you, just wanted to leave something before I go: a free 3-page sample site using photos from your page, completely free, no strings.\nJust reply "yes" po and I'll start on your sample right away. Wishing your salon continued success either way 🙏` }
-    ],
+    cold: {
+      salon: [
+        { meta: 'Day 3–4', title: 'Cold Follow-Up #1', text: `Hi po! Just following up po, maybe my message got buried 😊 I help salon owners get a simple website so customers can also find them on Google, not just FB. Would you be open to seeing a quick sample? No pressure po.` },
+        { meta: 'Day 7', title: 'Cold Follow-Up #2', note: 'Attach the relevant 30-second sample video.', text: `Hi po! Made this quick 30-second video so you can actually see it instead of me just describing it — this is what a website for your salon could look like on the phone.\n\nI’m currently offering complete salon websites for around ₱3,000–₱5,000, just wanted to give you an idea of what I can make for your salon. If you like the idea, I can also make a free personalized sample for your salon po. No rush 😊` },
+        { meta: 'Day 14', title: 'Cold Follow-Up #3 — Last Message', text: `Hi po! Last message from me, promise 🙂\n\nBefore I close the loop, I’d still be happy to make a free 3-page personalized sample site for [Salon Name] using photos from your FB page.\n\nCompletely free, no strings. Just reply “yes” po and I’ll start on it right away. If not, no worries po. Wishing your salon continued success 🙏` }
+      ],
+      skin: [
+        { meta: 'Day 3–4', title: 'Cold Follow-Up #1', text: `Hi po! Just following up po, maybe my message got buried 😊 I help skin clinics get a simple website so patients can also find them on Google, not just FB. Would you be open to seeing a quick sample? No pressure po.` },
+        { meta: 'Day 7', title: 'Cold Follow-Up #2', note: 'Attach the relevant 30-second sample video.', text: `Hi po! Made this quick 30-second video so you can actually see it instead of me just describing it — this is what a website for your clinic could look like on the phone.\n\nI’m currently offering complete clinic websites for around ₱3,000–₱5,000, just wanted to give you an idea of what I can make for your clinic. If you like the idea, I can also make a free personalized sample for your clinic po. No rush 😊` },
+        { meta: 'Day 14', title: 'Cold Follow-Up #3 — Last Message', text: `Hi po! Last message from me, promise 🙂\n\nBefore I close the loop, I’d still be happy to make a free 3-page personalized sample site for [Clinic Name] using photos from your FB page.\n\nCompletely free, no strings. Just reply “yes” po and I’ll start on it right away. If not, no worries po. Wishing your clinic continued success 🙏` }
+      ],
+      spa: [
+        { meta: 'Day 3–4', title: 'Cold Follow-Up #1', text: `Hi po! Just following up po, maybe my message got buried 😊 I help spas get a simple website so customers can also find them on Google, not just FB. Would you be open to seeing a quick sample? No pressure po.` },
+        { meta: 'Day 7', title: 'Cold Follow-Up #2', note: 'Attach the relevant 30-second sample video.', text: `Hi po! Made this quick 30-second video so you can actually see it instead of me just describing it — this is what a website for your spa could look like on the phone.\n\nI’m currently offering complete spa websites for around ₱3,000–₱5,000, just wanted to give you an idea of what I can make for your spa. If you like the idea, I can also make a free personalized sample for your spa po. No rush 😊` },
+        { meta: 'Day 14', title: 'Cold Follow-Up #3 — Last Message', text: `Hi po! Last message from me, promise 🙂\n\nBefore I close the loop, I’d still be happy to make a free 3-page personalized sample site for [Spa Name] using photos from your FB page.\n\nCompletely free, no strings. Just reply “yes” po and I’ll start on it right away. If not, no worries po. Wishing your spa continued success 🙏` }
+      ]
+    },
     postSample: [
       { meta: 'Day 2–3', title: 'After Sample Sent, No Reply — #1', text: `Hi po! No worries if you've been busy 😊 Still happy to build your free sample, if you're interested, just reply "yes" and I'll grab the photos straight from your page, no extra work needed on your end!` },
       { meta: 'Day 5–7', title: 'After Sample Sent, No Reply — #2', text: `Hi po! Totally fine if timing isn't right, just checking, are you still interested in the free sample? A quick "yes" is all I need, I'll handle the rest using your page photos.` }
@@ -807,8 +819,8 @@
     output.innerHTML = '';
     const bizKey = state.bizFollowup;
 
-    const coldCards = FOLLOWUP_BASE.cold.map(f => buildCard({
-      title: f.title, meta: f.meta, note: f.note, text: adaptText(f.text, bizKey)
+    const coldCards = FOLLOWUP_BASE.cold[bizKey].map(f => buildCard({
+      title: f.title, meta: f.meta, note: f.note, text: f.text
     }));
     output.appendChild(buildSection('Cold Outreach — No Reply Yet', coldCards));
 
